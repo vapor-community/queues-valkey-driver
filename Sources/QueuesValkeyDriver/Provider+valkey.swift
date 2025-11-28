@@ -4,8 +4,8 @@ import Vapor
 import VaporValkey
 
 public extension Application.Queues.Provider {
-    /// Use the Application's configured Valkey client as the Queues Driver. `Application.valkey` must be set before
-    /// calling this, otherwise it will fatal error.
+    /// Uses the Application's configured Valkey client as the Queues driver. `Application.valkey` must be set before
+    /// calling this, otherwise it will trigger a fatal error.
     ///
     /// Here's a quick example:
     /// ```swift
@@ -16,7 +16,7 @@ public extension Application.Queues.Provider {
     ///     logger: app.logger
     /// )
     /// app.queues.use(.valkey())
-    /// let email = Email()
+    /// let email = Email() // Assuming Email job is defined elsewhere
     /// app.queues.add(email)
     /// app.get("send-email") { req in
     ///     try await req.queue.dispatch(Email.self, .init(to: "person@example.com"))

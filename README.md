@@ -1,10 +1,10 @@
-# Queues Valkey
+# Queues Valkey Driver
 
-This project provides [valkey-swift](https://github.com/valkey-io/valkey-swift) as a driver for [Vapor Queues](https://github.com/vapor/queues), by using [VaporValkey]().
+This project provides [valkey-swift](https://github.com/valkey-io/valkey-swift) as a driver for [Vapor Queues](https://github.com/vapor/queues), by integrating with [VaporValkey](https://github.com/vapor-community/valkey).
 
 ## Usage
 
-To use this package, add it as a dependency. Then assign a Valkey client to `Application.valkey`, and enable Queues support via `Application.queues.use(.valkey())`:
+To use this package, add it as a dependency. Then assign a Valkey client to `Application.valkey`, and configure Queues to use Valkey via `Application.queues.use(.valkey())`:
 
 ```swift
 import Queues
