@@ -68,8 +68,8 @@ struct QueuesValkeyDriverTests {
             }
 
             // ensure this failed job is still in storage
-            let buffer = try #require(await client.get(.init(jobId.key)))
-            let job = try JSONDecoder().decode(JobData.self, from: buffer)
+            let result = try #require(await client.get(.init(jobId.key)))
+            let job = try JSONDecoder().decode(JobData.self, from: ByteBuffer(result))
             #expect(job.jobName == "FailingJob")
         }
     }
@@ -102,9 +102,8 @@ struct QueuesValkeyDriverTests {
             }
 
             // Verify the delayUntil date is encoded as the correct epoch time
-            let buffer = try #require(await client.get(.init(jobId.key)))
-            let job = try #require(buffer.getData(at: 0, length: buffer.readableBytes))
-            let dict = try JSONSerialization.jsonObject(with: job, options: .allowFragments) as! [String: Any]
+            let result = try #require(await client.get(.init(jobId.key)))
+            let dict = try JSONSerialization.jsonObject(with: ByteBuffer(result), options: .allowFragments) as! [String: Any]
 
             #expect(dict["jobName"] as! String == "DelayedJob")
             #expect(dict["delayUntil"] as! Int == 1_609_477_200)

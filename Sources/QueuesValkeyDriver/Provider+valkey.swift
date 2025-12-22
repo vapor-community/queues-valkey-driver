@@ -75,10 +75,10 @@ struct ValkeyQueue: Queue {
     func get(_ id: JobIdentifier) -> EventLoopFuture<JobData> {
         eventLoopGroup.makeFutureWithTask {
             // Get the job data
-            guard let buffer = try await client.get(.init(id.key)) else {
+            guard let result = try await client.get(.init(id.key)) else {
                 throw ValkeyQueueError.missingJob
             }
-            return try decoder.decode(JobData.self, from: buffer)
+            return try decoder.decode(JobData.self, from: ByteBuffer(result))
         }
     }
 
@@ -101,16 +101,13 @@ struct ValkeyQueue: Queue {
     func pop() -> EventLoopFuture<JobIdentifier?> {
         eventLoopGroup.makeFutureWithTask {
             // Move the last job reference from queue list to processing list
-            guard let buffer = try await client.rpoplpush(
+            guard let result = try await client.rpoplpush(
                 source: .init(self.key),
                 destination: .init(self.processingKey)
             ) else {
                 return nil
             }
-            guard let id = buffer.getString(at: 0, length: buffer.readableBytes) else {
-                throw ValkeyQueueError.nonStringIdentifier
-            }
-            return .init(string: id)
+            return .init(string: String(result))
         }
     }
 

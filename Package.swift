@@ -17,7 +17,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/valkey-io/valkey-swift.git", "0.4.0" ..< "0.5.0"),
+        .package(url: "https://github.com/valkey-io/valkey-swift.git", "0.5.0" ..< "0.6.0"),
         .package(url: "https://github.com/vapor/queues.git", from: "1.12.1"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.100.0"),
         .package(url: "https://github.com/vapor-community/valkey.git", from: "1.0.0"),
