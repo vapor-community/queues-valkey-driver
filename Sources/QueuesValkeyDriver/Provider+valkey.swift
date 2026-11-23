@@ -23,11 +23,11 @@ public extension Application.Queues.Provider {
     ///     return HTTPStatus.ok
     /// }
     /// ```
-    static func valkey() throws -> Self {
+    static func valkey(client: (any ValkeyClientProtocol)? = nil) throws -> Self {
         .init { app in
             app.queues.use(
                 custom: ValkeyQueuesDriver(
-                    client: app.valkey,
+                    client: client ?? app.valkey,
                     eventLoopGroup: app.eventLoopGroup
                 )
             )
