@@ -6,7 +6,6 @@ import Vapor
 import VaporTesting
 import VaporValkey
 
-@Suite
 struct QueuesValkeyDriverTests {
     @Test func application() async throws {
         try await withApp { app in
